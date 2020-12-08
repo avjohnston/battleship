@@ -26,10 +26,10 @@ class Cell
   end
 
   def fire_upon
-    # if @ship.length != 0
-    #
-    # else
-    # end
+    if @ship.length != 0
+      puts "this is confusing"
+    else
+    end
   end
 
 end
