@@ -27,7 +27,7 @@ class Cell
 
   def fire_upon
     if @ship.length != 0
-      puts "this is confusing"
+
     else
     end
   end
