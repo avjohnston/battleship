@@ -1,7 +1,7 @@
-require './lib/ship'
-require './lib/cell'
 require 'minitest/autorun'
 require 'minitest/pride'
+require './lib/ship'
+require './lib/cell'
 
 class CellTest < MiniTest::Test
   def test_it_exists
@@ -15,7 +15,6 @@ class CellTest < MiniTest::Test
   end
 
   def test_it_has_a_ship
-    skip
     cell = Cell.new("B4")
     assert_equal nil, cell.ship
   end
