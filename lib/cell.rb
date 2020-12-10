@@ -1,35 +1,44 @@
-require './lib/ship'
-
 class Cell
-  attr_reader :coordinate
+  attr_reader :coordinate,
+              :ship
+
   def initialize(coordinate)
     @coordinate = coordinate
-    @ship = []
+    @ship = nil
+    @fired_upon = false
   end
 
   def empty?
-    return true if @ship.length == 0
-    false
+    @ship.nil?
   end
 
-  def place_ship(cruiser)
-    @ship << cruiser
-  end
-
-  def ship
-    @ship
+  def place_ship(boat)
+    @ship = boat
   end
 
   def fired_upon?
-    return false if @health == @length
-    true
+    @fired_upon
   end
 
   def fire_upon
-    # if @ship.length != 0
-    #
-    # else
-    # end
+    if @ship != nil
+     @ship.hit
+   end
+  @fired_upon = true
+  end
+
+  def render(user = false)
+    if user == true && fired_upon? == false && !empty?
+      "S"
+    elsif fired_upon? == true && empty? == true
+      "M"
+    elsif fired_upon? == true && @ship.sunk? == true
+      "X"
+    elsif fired_upon? == true && empty? == false
+      "H"
+    else fired_upon? == false
+      "."
+    end
   end
 
 end
