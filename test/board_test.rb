@@ -32,6 +32,7 @@ class BoardTest < MiniTest::Test
       "D4" => Cell.new("D4"),
     }
     assert_equal 16, board.cells.size
+    assert_equal board.cells, board.cells
   end
 
   def test_if_cell_is_a_valid_coordinate
@@ -86,5 +87,4 @@ class BoardTest < MiniTest::Test
     # assert_equal false, board.valid_placement?(cruiser, ["A1", "B2", "C3"])
     # assert_equal false, board.valid_placement?(submarine, ["C2", "D3"])
   end
-
 end
