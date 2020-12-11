@@ -61,34 +61,34 @@ class CellTest < MiniTest::Test
   end
 
   def test_render_for_miss
-    # cruiser = Ship.new("Cruiser", 3)
-    cell_1 = Cell.new("B4")
-    cell_1.fire_upon
-    assert_equal "M", cell_1.render
+    cell = Cell.new("B4")
+    cruiser = Ship.new("Cruiser", 3)
+    cell.fire_upon
+    assert_equal "M", cell.render
   end
 
   def test_render_for_hit
+    cell = Cell.new("B4")
     cruiser = Ship.new("Cruiser", 3)
-    cell_1 = Cell.new("B4")
-    cell_1.place_ship(cruiser)
-    cell_1.fire_upon
-    assert_equal "H", cell_1.render
+    cell.place_ship(cruiser)
+    cell.fire_upon
+    assert_equal "H", cell.render
   end
 
   def test_render_for_sunk
+    cell = Cell.new("B4")
     cruiser = Ship.new("Cruiser", 1)
-    cell_1 = Cell.new("B4")
-    cell_1.place_ship(cruiser)
-    cell_1.fire_upon
-    assert_equal "X", cell_1.render
+    cell.place_ship(cruiser)
+    cell.fire_upon
+    assert_equal true, cell.ship.sunk?
+    assert_equal "X", cell.render
   end
-  #
-  def test_render_for_s
-    cruiser = Ship.new("Cruiser", 1)
-    cell_1 = Cell.new("B4")
-    cell_1.place_ship(cruiser)
 
-    assert_equal "S", cell_1.render(true)
+  def test_render_for_s
+    cell = Cell.new("B4")
+    cruiser = Ship.new("Cruiser", 1)
+    cell.place_ship(cruiser)
+    assert_equal "S", cell.render(true)
   end
 
 end
