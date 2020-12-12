@@ -31,7 +31,9 @@ class BoardTest < MiniTest::Test
       "D3" => Cell.new("D3"),
       "D4" => Cell.new("D4"),
     }
+
     assert_equal 16, expected.length
+
   end
 
   def test_if_cell_is_a_valid_coordinate
@@ -123,3 +125,4 @@ class BoardTest < MiniTest::Test
 
 
 end
+

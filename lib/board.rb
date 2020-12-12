@@ -36,6 +36,7 @@ class Board
   #   cell_hash
   # end
 
+
   def valid_coordinate?(cell)
     cells.keys.include?(cell)
   end
@@ -121,4 +122,4 @@ class Board
 
 
 end
-# require'pry';binding.pry
+
