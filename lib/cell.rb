@@ -27,15 +27,15 @@ class Cell
   end
 
   def render(user = false)
-    if user == true && fired_upon? == false && !empty?
-      "S"
-    elsif fired_upon? == true && empty? == true
+    if user == false && fired_upon? == true && empty? == true
       "M"
     elsif fired_upon? == true && @ship.sunk? == true
       "X"
     elsif fired_upon? == true && empty? == false
       "H"
-    else fired_upon? == false
+    elsif user == true && fired_upon? == false && !empty?
+      "S"
+    else
       "."
     end
   end
