@@ -15,6 +15,9 @@ class GameTest < MiniTest::Test
   def test_computer_picks_random_coordinates
     game = Game.new
     sub = Ship.new("Submarine", 2)
-    assert_equal 2, game.computer_random_coordinates(sub)
+    cruiser = Ship.new("Cruiser", 3)
+    assert_equal 2, game.random_coordinate_generator(sub)
+    assert_equal 2, game.random_coordinate_generator(cruiser)
   end
-end
+
+end 

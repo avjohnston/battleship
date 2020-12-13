@@ -16,9 +16,9 @@ class Game
   end
 
 
-  def computer_random_coordinates(ship)
+  def random_coordinate_generator(ship)
     cells = []
-    until @computer.valid_placement?(ship, cells) 
+    until @computer.valid_placement?(ship, cells)
       cells = []
       ship.length.times do
         cells << @computer.cells.keys.sample
@@ -27,9 +27,16 @@ class Game
     cells
   end
 
-  def place_computer_ship(ship)
-    @computer.place(ship, computer_random_coordinates(ship))
+  def computer_coordinates
+    random_coordinate_generator(@computer_cruiser)
+    @computer.place(@computer_cruiser, random_coordinate_generator(@computer_cruiser))
+    random_coordinate_generator(@computer_submarine)
+    @computer.place(@computer_submarine, random_coordinate_generator(@computer_submarine))
   end
+
+  # def place_computer_ship(ship)
+  #   @computer.place(ship, random_coordinate_generator(ship))
+  # end
 
   def player_coordinates
     puts "I have laid out my ships on the grid."
@@ -42,25 +49,114 @@ class Game
     puts "D . . . ."
     puts "Enter the squares for the Cruiser (3 spaces):"
     print ">"
+#asking for cuiser placement
+    cell = gets.chomp.upcase.split
+    until @player.valid_placement?(@user_cruiser, cell)
+      puts "Those coordinates aren't valid - please try again"
+      print ">"
+      cell = gets.chomp.upcase.split
+    end
+    @player.place(@user_cruiser, cell)
+    @player.render(true)
 
-    until cell.split == valid_placement?(ship)
-      cell = get.chomp
+    puts "Enter the squares for the Submarine (2 spaces):"
+    print ">"
+    #asking for sub placement
+    cell2 = gets.chomp.upcase.split
+    until @player.valid_placement?(@user_submarine, cell2)
+      puts "Those coordinates aren't valid - please try again"
+      print ">"
+      cell2 = gets.chomp.upcase.split
+    end
+    @player.place(@user_submarine, cell2)
+    @player.render(true)
+  end
+
+  def player_shot
+    puts "Enter the coordiante for you shot:"
+    print ">"
+    shot = gets.chomp.upcase.to_s
+    until (@computer.valid_coordinate?(shot) && !(@computer.cells[shot].fired_upon?))
+      puts "Please enter a valid coordinate:"
+      print ">"
+      shot = gets.chomp.upcase
+    end
+      @computer.cells[shot].fire_upon
+
+      if @computer.cells[shot].empty?
+        puts "My shot on #{shot} was a miss."
+      elsif !(@computer.cells[shot].empty?) && @computer.cells[shot].ship.sunk?
+        puts "My shot on #{shot} was a hit. You have sunk a ship!"
+      elsif !(@computer.cells[shot].empty?)
+        puts "My shot on #{shot} was a hit."
+      end
+  end
+
+  def computer_shot
+    array = []
+    until @player.valid_coordinate?(array) && !(@player.cells[array].fired_upon?)
+      array = @player.cells.keys.sample
+    end
+    @player.cells[array].fire_upon
+
+    if @player.cells[array].empty?
+      puts "Your shot on #{array} was a miss."
+    elsif !(@player.cells[array].empty?) && @player.cells[array].ship.sunk?
+      puts "Your shot on #{array} was a hit. You have sunk a ship!"
+    elsif !(@player.cells[array].empty?)
+      puts "Your shot on #{array} was a hit."
     end
   end
 
+  def turn
+    puts "======COMPUTER BOARD======"
+    puts @computer.render
+    puts "======Player BOARD======"
+    puts @player.render(true)
+    puts "\n"
 
+    player_shot
+    computer_shot
+    puts "\n"
+  end
 
+  def computer_lose
+    return true if @computer_cruiser.sunk? && @computer_submarine.sunk?
+    false
+  end
 
+  def player_lose
+    return true if @user_cruiser.sunk? && @user_submarine.sunk?
+    false
+  end
 
-
-
+  def winner
+    until computer_lose == true || player_lose == true
+      turn
+    end
+    if computer_lose == true
+      puts "======COMPUTER BOARD======"
+      puts @computer.render
+      puts "======Player BOARD======"
+      puts @player.render(true)
+      puts "\n"
+      puts "I won!"
+    else player_lose == true
+      puts "======COMPUTER BOARD======"
+      puts @computer.render
+      puts "======Player BOARD======"
+      puts @player.render(true)
+      puts "\n"
+      puts "Computer won!"
+    end
+  end
 
   def main_menu
-    "Welcome to BATTLESHIP"
-    "Enter p to play. Enter q to quit."
+    puts "Welcome to BATTLESHIP"
+    puts "Enter p to play. Enter q to quit."
     answer = gets.chomp.downcase
     if answer == "p"
-
+      player_coordinates
     else
       "Goodbye."
     end
