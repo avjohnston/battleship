@@ -75,8 +75,8 @@ class Board
   end
 
   def placed_consecutively(coordinates)
-    return true if (placed_consecutive_numbers?(coordinates) == true && placed_consecutive_letters?(coordinates) == false) ||
-    (placed_consecutive_numbers?(coordinates) == false && placed_consecutive_letters?(coordinates) == true)
+    return true if (placed_consecutive_numbers?(coordinates) == true && letters_array(coordinates).uniq.length == 1) ||
+    (numbers_array(coordinates).uniq.length == 1 && placed_consecutive_letters?(coordinates) == true)
     false
   end
 

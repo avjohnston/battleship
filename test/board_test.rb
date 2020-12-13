@@ -111,7 +111,6 @@ class BoardTest < MiniTest::Test
   end
 
   def test_renders_board
-    skip
     board = Board.new
     cruiser = Ship.new("Cruiser", 3)
     board.place(cruiser, ["A1", "A2", "A3"])
@@ -128,7 +127,6 @@ class BoardTest < MiniTest::Test
     board.cells["B1"].fire_upon
     missed_board = " 1 2 3 4 \nA . . . . \nB M . . . \nC . . . . \nD . . . . "
     assert_equal missed_board, board.render
-    assert_equal missed_board, board.render(true)
   end
 
   def test_board_renders_H
