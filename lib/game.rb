@@ -80,11 +80,11 @@ class Game
     @computer.cells[shot].fire_upon
 
     if @computer.cells[shot].empty? == true
-      puts "\nMy shot on #{shot} was a miss."
+      puts "\nYour shot on #{shot} was a miss."
     elsif @computer.cells[shot].empty? == false && @computer.cells[shot].ship.sunk? == true
-      puts "\nMy shot on #{shot} was a hit. I have sunk one of the computer's ships!"
+      puts "\nYour shot on #{shot} was a hit. You have sunk one of the computer's ships!"
     elsif @computer.cells[shot].empty? == false
-      puts "\nMy shot on #{shot} was a hit."
+      puts "\nYour shot on #{shot} was a hit."
     end
   end
 
@@ -137,14 +137,14 @@ class Game
       puts "====Player Board===="
       puts @player.render(true)
       puts "\n"
-      puts "I won!"
+      puts "You won!"
     else player_lose == true
       puts "===Computer Board==="
       puts @computer.render
       puts "====Player Board===="
       puts @player.render(true)
       puts "\n"
-      puts "The computer has won!"
+      puts "You lost!"
     end
   end
 
