@@ -82,7 +82,7 @@ class Game
     if @computer.cells[shot].empty? == true
       puts "\nMy shot on #{shot} was a miss."
     elsif @computer.cells[shot].empty? == false && @computer.cells[shot].ship.sunk? == true
-      puts "\nMy shot on #{shot} was a hit. I have sunk a ship!"
+      puts "\nMy shot on #{shot} was a hit. I have sunk one of the computer's ships!"
     elsif @computer.cells[shot].empty? == false
       puts "\nMy shot on #{shot} was a hit."
     end
@@ -97,11 +97,11 @@ class Game
     @player.cells[array].fire_upon
 
     if @player.cells[array].empty? == true
-      puts "Your shot on #{array} was a miss.\n"
+      puts "The computer's shot on #{array} was a miss.\n"
     elsif @player.cells[array].empty? == false && @player.cells[array].ship.sunk? == true
-      puts "Your shot on #{array} was a hit. You have sunk a ship!\n"
+      puts "The computer's shot on #{array} was a hit. The computer has sunk one of your ships!\n"
     elsif @player.cells[array].empty? == false
-      puts "Your shot on #{array} was a hit.\n"
+      puts "The computer's shot on #{array} was a hit.\n"
     end
   end
 
@@ -117,16 +117,34 @@ class Game
     puts "\n"
   end
 
+  def computer_lose
+    return true if (@computer_cruiser.sunk? == true && @computer_submarine.sunk? == true)
+    false
+  end
+
+  def player_lose
+    return true if (@user_cruiser.sunk? == true && @user_submarine.sunk? == true)
+    false
+  end
+
   def winner
-    computer_lose = (@computer_cruiser.sunk? == true && @computer_submarine.sunk? == true)
-    player_lose = (@player_cruiser.sunk? == true && @player_submarine.sunk? == true)
-    until  computer_lose || player_lose
+    until computer_lose == true || player_lose == true
       turn
     end
     if computer_lose == true
+      puts "===Computer Board==="
+      puts @computer.render
+      puts "====Player Board===="
+      puts @player.render(true)
+      puts "\n"
       puts "I won!"
     else player_lose == true
-      puts "You won!"
+      puts "===Computer Board==="
+      puts @computer.render
+      puts "====Player Board===="
+      puts @player.render(true)
+      puts "\n"
+      puts "The computer has won!"
     end
   end
 
