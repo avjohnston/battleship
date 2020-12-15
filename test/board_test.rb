@@ -174,4 +174,6 @@ class BoardTest < MiniTest::Test
     assert_equal " 1 2 3 4 \nA X X X . \nB . . . . \nC . . . . \nD . . . . \n", board.render
     assert_equal " 1 2 3 4 \nA X X X . \nB . . . . \nC . . . . \nD . . . . \n", board.render(true)
   end
+
+  
 end
