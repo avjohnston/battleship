@@ -147,37 +147,31 @@ class BoardTest < MiniTest::Test
   end
 
   def test_board_renders_M
-    skip
     board = Board.new
     cruiser = Ship.new("Cruiser", 3)
     board.place(cruiser, ["A1", "A2", "A3"])
     board.cells["B1"].fire_upon
-    missed_board = " 1 2 3 4 \nA . . . . \nB M . . . \nC . . . . \nD . . . . "
-    assert_equal missed_board, board.render
-    assert_equal missed_board, board.render(true)
+    assert_equal " 1 2 3 4 \nA . . . . \nB M . . . \nC . . . . \nD . . . . \n", board.render
+    assert_equal " 1 2 3 4 \nA S S S . \nB M . . . \nC . . . . \nD . . . . \n", board.render(true)
   end
 
   def test_board_renders_H
-    skip
     board = Board.new
     cruiser = Ship.new("Cruiser", 3)
     board.place(cruiser, ["A1", "A2", "A3"])
     board.cells["A1"].fire_upon
-    missed_board = " 1 2 3 4 \nA H . . . \nB . . . . \nC . . . . \nD . . . . "
-    assert_equal missed_board, board.render
-    assert_equal missed_board, board.render(true)
+    assert_equal " 1 2 3 4 \nA H . . . \nB . . . . \nC . . . . \nD . . . . \n", board.render
+    assert_equal " 1 2 3 4 \nA H S S . \nB . . . . \nC . . . . \nD . . . . \n", board.render(true)
   end
 
   def test_board_renders_X
-    skip
     board = Board.new
     cruiser = Ship.new("Cruiser", 3)
     board.place(cruiser, ["A1", "A2", "A3"])
     board.cells["A1"].fire_upon
     board.cells["A2"].fire_upon
     board.cells["A3"].fire_upon
-    missed_board = " 1 2 3 4 \nA X X X . \nB . . . . \nC . . . . \nD . . . . "
-    assert_equal missed_board, board.render
-    assert_equal missed_board, board.render(true)
+    assert_equal " 1 2 3 4 \nA X X X . \nB . . . . \nC . . . . \nD . . . . \n", board.render
+    assert_equal " 1 2 3 4 \nA X X X . \nB . . . . \nC . . . . \nD . . . . \n", board.render(true)
   end
 end
