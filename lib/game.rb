@@ -149,7 +149,7 @@ class Game
   end
 
   def main_menu
-    puts "Welcome to BATTELSHIP \nEnter P to play. Enter Q to quit."
+    puts "Welcome to BATTLESHIP \nEnter P to play. Enter Q to quit."
     print ">"
     answer = gets.chomp.upcase.downcase
     if answer == 'p'
