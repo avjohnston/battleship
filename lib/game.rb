@@ -1,10 +1,9 @@
-
 class Game
-  attr_reader :player,
-              :computer,
-              :computer_submarine,
-              :user_submarine,
-              :computer_cruiser,
+  attr_reader :player
+              :computer
+              :computer_submarine
+              :user_submarine
+              :computer_cruiser
               :user_cruiser
 
   def initialize
@@ -34,40 +33,11 @@ class Game
     puts "You now need to lay out your two ships."
     puts "The Cruiser is three units long and the Submarine is two units long."
     puts "\n"
-
-    @user_cruiser = Ship.new("Cruiser", 3)
-
-  end
-
-
-  def random_coordinate_generator(ship)
-    cells = []
-    until @computer.valid_placement?(ship, cells)
-      cells = []
-      ship.length.times do
-        cells << @computer.cells.keys.sample
-      end
-    end
-    cells
-  end
-
-  def computer_coordinates
-    random_coordinate_generator(@computer_cruiser)
-    @computer.place(@computer_cruiser, random_coordinate_generator(@computer_cruiser))
-    random_coordinate_generator(@computer_submarine)
-    @computer.place(@computer_submarine, random_coordinate_generator(@computer_submarine))
-  end
-
-  def player_coordinates
-    puts "I have laid out my ships on the grid."
-    puts "You now need to lay out your two ships."
-    puts "The Cruiser is three units long and the Submarine is two units long."
     puts "  1 2 3 4"
     puts "A . . . ."
     puts "B . . . ."
     puts "C . . . ."
     puts "D . . . ."
-
         # asking for cruiser placement
     puts "\nEnter the squares for the Cruiser (3 spaces):"
     print ">"
@@ -80,7 +50,7 @@ class Game
     cell
     @player.place(@user_cruiser, cell)
     puts "\n"
-    @player.render(true)
+    puts @player.render(true)
     # asking for submarine placement
     puts "\nEnter the squares for the Submarine (2 spaces):"
     print ">"
@@ -93,8 +63,7 @@ class Game
     cell2
     @player.place(@user_submarine, cell2)
     puts "\n"
-    @player.render(true)
-    puts "\n"
+    puts "Our board's are now set!"
   end
 
   def player_shot
@@ -106,44 +75,40 @@ class Game
       print ">"
       shot = gets.chomp.upcase
     end
+    @computer.cells[shot].fire_upon
 
-      @computer.cells[shot].fire_upon
-
-      if @computer.cells[shot].empty?
-        puts "Your shot on #{shot} was a miss."
-      elsif !(@computer.cells[shot].empty?) && @computer.cells[shot].ship.sunk?
-        puts "Your shot on #{shot} was a hit. You have sunk the computer's ship!"
-      elsif !(@computer.cells[shot].empty?)
-        puts "Your shot on #{shot} was a hit."
-      end
-
+    if @computer.cells[shot].empty? == true
+      puts "\nYour shot on #{shot} was a miss."
+    elsif @computer.cells[shot].empty? == false && @computer.cells[shot].ship.sunk? == true
+      puts "\nYour shot on #{shot} was a hit. You have sunk one of the computer's ships!"
+    elsif @computer.cells[shot].empty? == false
+      puts "\nYour shot on #{shot} was a hit."
+    end
   end
 
   def computer_shot
     array = []
-
-    until @player.valid_coordinate?(array) && !(@player.cells[array].fired_upon?)
+    until @player.valid_coordinate?(array) == true && @player.cells[array].fired_upon? == false do
       array = @player.cells.keys.sample
     end
+    array
     @player.cells[array].fire_upon
 
-    if @player.cells[array].empty?
+    if @player.cells[array].empty? == true
       puts "The computer's shot on #{array} was a miss."
-    elsif !(@player.cells[array].empty?) && @player.cells[array].ship.sunk?
-      puts "The computer's shot on #{array} was a hit. The computer have sunk a ship!"
-    elsif !(@player.cells[array].empty?)
+    elsif @player.cells[array].empty? == false && @player.cells[array].ship.sunk? == true
+      puts "The computer's shot on #{array} was a hit. The computer has sunk one of your ships!\n"
+    elsif @player.cells[array].empty? == false
       puts "The computer's shot on #{array} was a hit."
-
     end
   end
 
   def turn
-
     puts "\n===Computer Board==="
     puts @computer.render
     puts "====Player Board===="
     puts @player.render(true)
-
+    puts "\n"
 
     player_shot
     computer_shot
@@ -151,16 +116,12 @@ class Game
   end
 
   def computer_lose
-
-    return true if @computer_cruiser.sunk? && @computer_submarine.sunk?
-
+    return true if (@computer_cruiser.sunk? == true && @computer_submarine.sunk? == true)
     false
   end
 
   def player_lose
-
-    return true if @user_cruiser.sunk? && @user_submarine.sunk?
-
+    return true if (@user_cruiser.sunk? == true && @user_submarine.sunk? == true)
     false
   end
 
@@ -169,37 +130,34 @@ class Game
       turn
     end
     if computer_lose == true
-
-      puts "======COMPUTER BOARD======"
+      puts "===Computer Board==="
       puts @computer.render
-      puts "======Player BOARD======"
+      puts "====Player Board===="
       puts @player.render(true)
-      puts "\n"
+      "\n"
       puts "You won!"
     else player_lose == true
-      puts "======COMPUTER BOARD======"
+      puts "===Computer Board==="
       puts @computer.render
-      puts "======Player BOARD======"
+      puts "====Player Board===="
       puts @player.render(true)
-      puts "\n"
-
+      "\n"
       puts "You lost!"
     end
   end
 
   def main_menu
-
-    puts "Welcome to BATTLESHIP"
-    puts "Enter p to play. Enter q to quit."
-    answer = gets.chomp.downcase
-    if answer == "p"
-
+    puts "Welcome to BATTLESHIP \nEnter P to play. Enter Q to quit."
+    print ">"
+    answer = gets.chomp.upcase.downcase
+    if answer == 'p'
       player_coordinates
+    elsif answer == "q"
+      abort "\nGoodbye!"
     else
-      "Goodbye."
+      puts "Not a valid input."
+      puts "\n"
+      main_menu
     end
   end
-
-
-
 end
