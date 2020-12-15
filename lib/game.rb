@@ -53,7 +53,8 @@ class Game
     end
     cell
     @player.place(@user_cruiser, cell)
-    @player.render(true)
+    puts "\n"
+    puts @player.render(true)
     # asking for submarine placement
     puts "\nEnter the squares for the Submarine (2 spaces):"
     print ">"
@@ -65,7 +66,6 @@ class Game
     end
     cell2
     @player.place(@user_submarine, cell2)
-    @player.render(true)
   end
 
   def player_shot
