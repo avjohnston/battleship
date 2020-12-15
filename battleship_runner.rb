@@ -4,6 +4,6 @@ require './lib/board'
 require './lib/game'
 
 game = Game.new
-game.main_menu
 game.computer_coordinates
+game.main_menu
 game.winner

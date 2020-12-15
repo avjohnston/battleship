@@ -1,3 +1,4 @@
+
 class Game
   attr_reader :player,
               :computer,
@@ -13,6 +14,29 @@ class Game
     @user_submarine = Ship.new("Submarine", 2)
     @computer_cruiser = Ship.new("Cruiser", 3)
     @user_cruiser = Ship.new("Cruiser", 3)
+  end
+
+  def random_coordinate_generator(ship)
+    array = []
+    until @computer.valid_placement?(ship, array) == true do
+      array = @computer.cells.keys.sample(ship.length)
+    end
+    array
+  end
+
+  def computer_coordinates
+    @computer.place(@computer_cruiser, random_coordinate_generator(@computer_cruiser))
+    @computer.place(@computer_submarine, random_coordinate_generator(@computer_submarine))
+  end
+
+  def player_coordinates
+    puts "\nI have laid out my ships on the grid."
+    puts "You now need to lay out your two ships."
+    puts "The Cruiser is three units long and the Submarine is two units long."
+    puts "\n"
+
+    @user_cruiser = Ship.new("Cruiser", 3)
+
   end
 
 
@@ -34,10 +58,6 @@ class Game
     @computer.place(@computer_submarine, random_coordinate_generator(@computer_submarine))
   end
 
-  # def place_computer_ship(ship)
-  #   @computer.place(ship, random_coordinate_generator(ship))
-  # end
-
   def player_coordinates
     puts "I have laid out my ships on the grid."
     puts "You now need to lay out your two ships."
@@ -47,40 +67,46 @@ class Game
     puts "B . . . ."
     puts "C . . . ."
     puts "D . . . ."
-    puts "Enter the squares for the Cruiser (3 spaces):"
+
+        # asking for cruiser placement
+    puts "\nEnter the squares for the Cruiser (3 spaces):"
     print ">"
-#asking for cuiser placement
     cell = gets.chomp.upcase.split
     until @player.valid_placement?(@user_cruiser, cell)
-      puts "Those coordinates aren't valid - please try again"
+      puts "Those are invalid coordinates. Please try again:"
       print ">"
       cell = gets.chomp.upcase.split
     end
+    cell
     @player.place(@user_cruiser, cell)
+    puts "\n"
     @player.render(true)
-
-    puts "Enter the squares for the Submarine (2 spaces):"
+    # asking for submarine placement
+    puts "\nEnter the squares for the Submarine (2 spaces):"
     print ">"
-    #asking for sub placement
     cell2 = gets.chomp.upcase.split
     until @player.valid_placement?(@user_submarine, cell2)
-      puts "Those coordinates aren't valid - please try again"
+      puts "Those are invalid coordinates. Please try again:"
       print ">"
       cell2 = gets.chomp.upcase.split
     end
+    cell2
     @player.place(@user_submarine, cell2)
+    puts "\n"
     @player.render(true)
+    puts "\n"
   end
 
   def player_shot
-    puts "Enter the coordiante for you shot:"
+    puts "Enter the coordinate for your shot:"
     print ">"
     shot = gets.chomp.upcase.to_s
-    until (@computer.valid_coordinate?(shot) && !(@computer.cells[shot].fired_upon?))
+    until (@computer.valid_coordinate?(shot) == true) && (@computer.cells[shot].fired_upon? == false)
       puts "Please enter a valid coordinate:"
       print ">"
       shot = gets.chomp.upcase
     end
+
       @computer.cells[shot].fire_upon
 
       if @computer.cells[shot].empty?
@@ -90,10 +116,12 @@ class Game
       elsif !(@computer.cells[shot].empty?)
         puts "Your shot on #{shot} was a hit."
       end
+
   end
 
   def computer_shot
     array = []
+
     until @player.valid_coordinate?(array) && !(@player.cells[array].fired_upon?)
       array = @player.cells.keys.sample
     end
@@ -105,15 +133,17 @@ class Game
       puts "The computer's shot on #{array} was a hit. The computer have sunk a ship!"
     elsif !(@player.cells[array].empty?)
       puts "The computer's shot on #{array} was a hit."
+
     end
   end
 
   def turn
-    puts "======COMPUTER BOARD======"
+
+    puts "\n===Computer Board==="
     puts @computer.render
-    puts "======Player BOARD======"
+    puts "====Player Board===="
     puts @player.render(true)
-    puts "\n"
+
 
     player_shot
     computer_shot
@@ -121,12 +151,16 @@ class Game
   end
 
   def computer_lose
+
     return true if @computer_cruiser.sunk? && @computer_submarine.sunk?
+
     false
   end
 
   def player_lose
+
     return true if @user_cruiser.sunk? && @user_submarine.sunk?
+
     false
   end
 
@@ -135,6 +169,7 @@ class Game
       turn
     end
     if computer_lose == true
+
       puts "======COMPUTER BOARD======"
       puts @computer.render
       puts "======Player BOARD======"
@@ -147,21 +182,23 @@ class Game
       puts "======Player BOARD======"
       puts @player.render(true)
       puts "\n"
+
       puts "You lost!"
     end
   end
 
   def main_menu
+
     puts "Welcome to BATTLESHIP"
     puts "Enter p to play. Enter q to quit."
     answer = gets.chomp.downcase
     if answer == "p"
+
       player_coordinates
     else
       "Goodbye."
     end
   end
-
 
 
 

@@ -66,16 +66,29 @@ class BoardTest < MiniTest::Test
     cruiser = Ship.new("Cruiser", 3)
     submarine = Ship.new("Submarine", 2)
     assert_equal false, board.placed_consecutive_letters?(["A1", "A2"])
+    assert_equal false, board.placed_consecutive_letters?(["A1", "C1"])
     assert_equal true, board.placed_consecutive_letters?(["A1", "B1"])
   end
+
 
   def test_placed_consecutive_numbers?
     board = Board.new
     cruiser = Ship.new("Cruiser", 3)
     submarine = Ship.new("Submarine", 2)
-    assert_equal true, board.placed_consecutive_numbers?(["A1", "B2"])
+    assert_equal true, board.placed_consecutive_numbers?(["A1", "A2"])
     assert_equal false, board.placed_consecutive_numbers?(["A1", "B1"])
+    assert_equal false, board.placed_consecutive_numbers?(["A1", "A3"])
   end
+
+    def test_placed_consecutively
+      board = Board.new
+      cruiser = Ship.new("Cruiser", 3)
+      submarine = Ship.new("Submarine", 2)
+      assert_equal false, board.placed_consecutively(["A1", "A3"])
+      assert_equal false, board.placed_consecutively(["A1", "B1", "C2"])
+      assert_equal true, board.placed_consecutive_letters?(["A1", "B1"])
+      assert_equal true, board.placed_consecutive_letters?(["A1", "B1", "C1"])
+    end
 
   def test_valid_coordinate?
     board = Board.new
@@ -102,6 +115,21 @@ class BoardTest < MiniTest::Test
     assert_equal cruiser, cell_2.ship
     assert_equal cruiser, cell_3.ship
     assert_equal true, cell_3.ship == cell_2.ship
+  end
+
+  def test_a_cell_is_empty
+    board = Board.new
+    cruiser = Ship.new("Cruiser", 3)
+    board.place(cruiser, ["A1", "A2", "A3"])
+    cell_1 = board.cells["A1"]
+    cell_2 = board.cells["A2"]
+    cell_3 = board.cells["A3"]
+    cell_4 = board.cells["A4"]
+    assert_equal cruiser, cell_1.ship
+    assert_equal cruiser, cell_2.ship
+    assert_equal cruiser, cell_3.ship
+    assert_equal true, cell_3.ship == cell_2.ship
+    assert_nil cell_4.ship
   end
 
   def test_ships_cant_overlap
@@ -148,4 +176,6 @@ class BoardTest < MiniTest::Test
     assert_equal " 1 2 3 4 \nA X X X . \nB . . . . \nC . . . . \nD . . . . \n", board.render
     assert_equal " 1 2 3 4 \nA X X X . \nB . . . . \nC . . . . \nD . . . . \n", board.render(true)
   end
+
+  
 end
