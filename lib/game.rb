@@ -1,7 +1,3 @@
-require './lib/board'
-require './lib/ship'
-require './lib/cell'
-
 class Game
   attr_reader :player
               :computer
@@ -66,6 +62,8 @@ class Game
     end
     cell2
     @player.place(@user_submarine, cell2)
+    puts "\n"
+    puts "Our board's are now set!"
   end
 
   def player_shot
@@ -162,5 +160,4 @@ class Game
       main_menu
     end
   end
-
 end
