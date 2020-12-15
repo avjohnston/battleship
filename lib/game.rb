@@ -12,7 +12,7 @@ class Game
     @computer_submarine = Ship.new("Submarine", 2)
     @user_submarine = Ship.new("Submarine", 2)
     @computer_cruiser = Ship.new("Cruiser", 3)
-    @user_cruiser = Ship.new("Cruiser", 3) 
+    @user_cruiser = Ship.new("Cruiser", 3)
   end
 
 
@@ -161,6 +161,8 @@ class Game
       "Goodbye."
     end
   end
+
+
 
 
 end
