@@ -36,6 +36,7 @@ class Game
     puts "\nI have laid out my ships on the grid."
     puts "You now need to lay out your two ships."
     puts "The Cruiser is three units long and the Submarine is two units long."
+    puts "\n"
     puts "  1 2 3 4"
     puts "A . . . ."
     puts "B . . . ."
@@ -51,8 +52,8 @@ class Game
       cell = gets.chomp.upcase.split
     end
     cell
-    # require'pry';binding.pry
     @player.place(@user_cruiser, cell)
+    puts "\n"
     @player.render(true)
     # asking for submarine placement
     puts "\nEnter the squares for the Submarine (2 spaces):"
@@ -65,11 +66,13 @@ class Game
     end
     cell2
     @player.place(@user_submarine, cell2)
+    puts "\n"
     @player.render(true)
+    puts "\n"
   end
 
   def player_shot
-    puts "\nEnter the coordinate for your shot:"
+    puts "Enter the coordinate for your shot:"
     print ">"
     shot = gets.chomp.upcase.to_s
     until (@computer.valid_coordinate?(shot) == true) && (@computer.cells[shot].fired_upon? == false)
@@ -106,11 +109,10 @@ class Game
   end
 
   def turn
-    puts "===Computer Board==="
+    puts "\n===Computer Board==="
     puts @computer.render
     puts "====Player Board===="
     puts @player.render(true)
-    puts "\n"
 
     player_shot
     computer_shot
@@ -136,14 +138,12 @@ class Game
       puts @computer.render
       puts "====Player Board===="
       puts @player.render(true)
-      puts "\n"
       puts "You won!"
     else player_lose == true
       puts "===Computer Board==="
       puts @computer.render
       puts "====Player Board===="
       puts @player.render(true)
-      puts "\n"
       puts "You lost!"
     end
   end

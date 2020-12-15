@@ -12,6 +12,7 @@ class GameTest < MiniTest::Test
   end
 
   def test_computer_picks_random_coordinates
+    skip
     game = Game.new
     sub = Ship.new("Submarine", 2)
     cruiser = Ship.new("Cruiser", 3)
@@ -19,12 +20,16 @@ class GameTest < MiniTest::Test
     assert_equal 0, game.random_coordinate_generator(cruiser)
   end
 
-  def test_computer_picks_random_coordinatesXXXXX
+  def test_computer_picks_random_coordinates
     skip
     game = Game.new
     sub = Ship.new("Submarine", 2)
     cruiser = Ship.new("Cruiser", 3)
-    assert_equal 0, game.random_coords
+    assert_equal 0, game.computer_coordinates
+  end
+
+  def test_
+
   end
 
 end
