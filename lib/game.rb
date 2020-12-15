@@ -149,13 +149,18 @@ class Game
   end
 
   def main_menu
-    puts "Welcome to BATTELSHIP \nEnter p to play. Enter q to quit."
+    puts "Welcome to BATTELSHIP \nEnter P to play. Enter Q to quit."
     print ">"
     answer = gets.chomp.upcase.downcase
     if answer == 'p'
       player_coordinates
+    elsif answer == "q"
+      abort "\nGoodbye!"
     else
-      "Goodbye."
+      puts "Not a valid input."
+      puts "\n"
+      main_menu
     end
   end
+
 end
