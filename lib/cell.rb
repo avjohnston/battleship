@@ -3,7 +3,7 @@ class Cell
               :ship
   def initialize(coordinate)
     @coordinate = coordinate
-    @ship = nil
+    @ship       = nil
     @fired_upon = false
   end
 
@@ -27,17 +27,16 @@ class Cell
   end
 
   def render(user = false)
-    if fired_upon? == true && empty? == true
+    if fired_upon? && empty?
       "M"
-    elsif fired_upon? == true && @ship.sunk? == true
+    elsif fired_upon?  && @ship.sunk?
       "X"
-    elsif fired_upon? == true && empty? == false
+    elsif fired_upon?  && !empty?
       "H"
-    elsif user == true && fired_upon? == false && !empty?
+    elsif user  && !fired_upon?  && !empty?
       "S"
     else
       "."
     end
   end
-
 end

@@ -3,7 +3,7 @@ class Ship
               :length,
               :health
   def initialize(name, length)
-    @name = name
+    @name   = name
     @length = length
     @health = length
   end
@@ -20,5 +20,4 @@ class Ship
   def hit
     @health -= 1
   end
-
 end

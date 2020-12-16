@@ -45,5 +45,4 @@ class ShipTest < MiniTest::Test
     assert_equal 0, cruiser.health
     assert_equal true, cruiser.sunk?
   end
-
 end

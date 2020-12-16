@@ -1,6 +1,5 @@
 require 'minitest/autorun'
 require 'minitest/pride'
-require 'mocha/minitest'
 require './lib/ship'
 require './lib/cell'
 
@@ -91,5 +90,4 @@ class CellTest < MiniTest::Test
     cell.place_ship(cruiser)
     assert_equal "S", cell.render(true)
   end
-
 end
