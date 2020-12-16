@@ -12,28 +12,24 @@ class BoardTest < MiniTest::Test
 
   def test_cells_exist
     board = Board.new
-
-    expected = {
-      "A1" => Cell.new("A1"),
-      "A2" => Cell.new("A2"),
-      "A3" => Cell.new("A3"),
-      "A4" => Cell.new("A4"),
-      "B1" => Cell.new("B1"),
-      "B2" => Cell.new("B2"),
-      "B3" => Cell.new("B3"),
-      "B4" => Cell.new("B4"),
-      "C1" => Cell.new("C1"),
-      "C2" => Cell.new("C2"),
-      "C3" => Cell.new("C3"),
-      "C4" => Cell.new("C4"),
-      "D1" => Cell.new("D1"),
-      "D2" => Cell.new("D2"),
-      "D3" => Cell.new("D3"),
-      "D4" => Cell.new("D4"),
-    }
-
+    expected = {"A1" => Cell.new("A1"),
+                "A2" => Cell.new("A2"),
+                "A3" => Cell.new("A3"),
+                "A4" => Cell.new("A4"),
+                "B1" => Cell.new("B1"),
+                "B2" => Cell.new("B2"),
+                "B3" => Cell.new("B3"),
+                "B4" => Cell.new("B4"),
+                "C1" => Cell.new("C1"),
+                "C2" => Cell.new("C2"),
+                "C3" => Cell.new("C3"),
+                "C4" => Cell.new("C4"),
+                "D1" => Cell.new("D1"),
+                "D2" => Cell.new("D2"),
+                "D3" => Cell.new("D3"),
+                "D4" => Cell.new("D4"),
+                }
     assert_equal 16, expected.length
-
   end
 
   def test_if_cell_is_a_valid_coordinate
@@ -70,7 +66,6 @@ class BoardTest < MiniTest::Test
     assert_equal true, board.placed_consecutive_letters?(["A1", "B1"])
   end
 
-
   def test_placed_consecutive_numbers?
     board = Board.new
     cruiser = Ship.new("Cruiser", 3)
@@ -80,15 +75,25 @@ class BoardTest < MiniTest::Test
     assert_equal false, board.placed_consecutive_numbers?(["A1", "A3"])
   end
 
-    def test_placed_consecutively
-      board = Board.new
-      cruiser = Ship.new("Cruiser", 3)
-      submarine = Ship.new("Submarine", 2)
-      assert_equal false, board.placed_consecutively(["A1", "A3"])
-      assert_equal false, board.placed_consecutively(["A1", "B1", "C2"])
-      assert_equal true, board.placed_consecutive_letters?(["A1", "B1"])
-      assert_equal true, board.placed_consecutive_letters?(["A1", "B1", "C1"])
-    end
+  def test_placed_consecutively
+    board = Board.new
+    cruiser = Ship.new("Cruiser", 3)
+    submarine = Ship.new("Submarine", 2)
+    assert_equal false, board.placed_consecutively(["A1", "A3"])
+    assert_equal false, board.placed_consecutively(["A1", "B1", "C2"])
+    assert_equal true, board.placed_consecutive_letters?(["A1", "B1"])
+    assert_equal true, board.placed_consecutive_letters?(["A1", "B1", "C1"])
+  end
+
+  def test_valid_placement_for_coordinate?
+    board = Board.new
+    cruiser = Ship.new("Cruiser", 3)
+    submarine = Ship.new("Submarine", 2)
+    assert_equal false, board.valid_ship_coordinates?(["A5", "B5", "C5"])
+    assert_equal false, board.valid_ship_coordinates?(["C1", "D1", "E1"])
+    assert_equal true, board.valid_ship_coordinates?(["A1", "A2"])
+    assert_equal true, board.valid_ship_coordinates?(["B1", "C1", "D1"])
+  end
 
   def test_valid_coordinate?
     board = Board.new
@@ -144,8 +149,8 @@ class BoardTest < MiniTest::Test
     board = Board.new
     cruiser = Ship.new("Cruiser", 3)
     board.place(cruiser, ["A1", "A2", "A3"])
-    assert_equal " 1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD . . . . \n", board.render
-    assert_equal " 1 2 3 4 \nA S S S . \nB . . . . \nC . . . . \nD . . . . \n", board.render(true)
+    assert_equal "  1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD . . . . \n", board.render
+    assert_equal "  1 2 3 4 \nA S S S . \nB . . . . \nC . . . . \nD . . . . \n", board.render(true)
   end
 
   def test_board_renders_M
@@ -153,8 +158,8 @@ class BoardTest < MiniTest::Test
     cruiser = Ship.new("Cruiser", 3)
     board.place(cruiser, ["A1", "A2", "A3"])
     board.cells["B1"].fire_upon
-    assert_equal " 1 2 3 4 \nA . . . . \nB M . . . \nC . . . . \nD . . . . \n", board.render
-    assert_equal " 1 2 3 4 \nA S S S . \nB M . . . \nC . . . . \nD . . . . \n", board.render(true)
+    assert_equal "  1 2 3 4 \nA . . . . \nB M . . . \nC . . . . \nD . . . . \n", board.render
+    assert_equal "  1 2 3 4 \nA S S S . \nB M . . . \nC . . . . \nD . . . . \n", board.render(true)
   end
 
   def test_board_renders_H
@@ -162,8 +167,8 @@ class BoardTest < MiniTest::Test
     cruiser = Ship.new("Cruiser", 3)
     board.place(cruiser, ["A1", "A2", "A3"])
     board.cells["A1"].fire_upon
-    assert_equal " 1 2 3 4 \nA H . . . \nB . . . . \nC . . . . \nD . . . . \n", board.render
-    assert_equal " 1 2 3 4 \nA H S S . \nB . . . . \nC . . . . \nD . . . . \n", board.render(true)
+    assert_equal "  1 2 3 4 \nA H . . . \nB . . . . \nC . . . . \nD . . . . \n", board.render
+    assert_equal "  1 2 3 4 \nA H S S . \nB . . . . \nC . . . . \nD . . . . \n", board.render(true)
   end
 
   def test_board_renders_X
@@ -173,9 +178,8 @@ class BoardTest < MiniTest::Test
     board.cells["A1"].fire_upon
     board.cells["A2"].fire_upon
     board.cells["A3"].fire_upon
-    assert_equal " 1 2 3 4 \nA X X X . \nB . . . . \nC . . . . \nD . . . . \n", board.render
-    assert_equal " 1 2 3 4 \nA X X X . \nB . . . . \nC . . . . \nD . . . . \n", board.render(true)
+    assert_equal "  1 2 3 4 \nA X X X . \nB . . . . \nC . . . . \nD . . . . \n", board.render
+    assert_equal "  1 2 3 4 \nA X X X . \nB . . . . \nC . . . . \nD . . . . \n", board.render(true)
   end
 
-  
 end

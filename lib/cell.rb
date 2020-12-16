@@ -3,7 +3,7 @@ class Cell
               :ship
   def initialize(coordinate)
     @coordinate = coordinate
-    @ship = nil
+    @ship       = nil
     @fired_upon = false
   end
 
@@ -39,5 +39,4 @@ class Cell
       "."
     end
   end
-
 end

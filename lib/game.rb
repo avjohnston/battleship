@@ -7,12 +7,12 @@ class Game
               :user_cruiser
 
   def initialize
-    @player = Board.new
-    @computer = Board.new
+    @player             = Board.new
+    @computer           = Board.new
     @computer_submarine = Ship.new("Submarine", 2)
-    @user_submarine = Ship.new("Submarine", 2)
-    @computer_cruiser = Ship.new("Cruiser", 3)
-    @user_cruiser = Ship.new("Cruiser", 3)
+    @user_submarine     = Ship.new("Submarine", 2)
+    @computer_cruiser   = Ship.new("Cruiser", 3)
+    @user_cruiser       = Ship.new("Cruiser", 3)
   end
 
   def random_coordinate_generator(ship)
@@ -28,7 +28,7 @@ class Game
     @computer.place(@computer_submarine, random_coordinate_generator(@computer_submarine))
   end
 
-  def player_coordinates
+  def lay_player_ships_prompt
     puts "\nI have laid out my ships on the grid."
     puts "You now need to lay out your two ships."
     puts "The Cruiser is three units long and the Submarine is two units long."
@@ -38,32 +38,44 @@ class Game
     puts "B . . . ."
     puts "C . . . ."
     puts "D . . . ."
-        # asking for cruiser placement
+  end
+
+  def player_cruiser_placement
     puts "\nEnter the squares for the Cruiser (3 spaces):"
     print ">"
-    cell = gets.chomp.upcase.split
-    until @player.valid_placement?(@user_cruiser, cell)
+    cells = gets.chomp.upcase.split(" ")
+    until @player.valid_placement?(@user_cruiser, cells)
       puts "Those are invalid coordinates. Please try again:"
       print ">"
-      cell = gets.chomp.upcase.split
+      cells = gets.chomp.upcase.split
     end
-    cell
-    @player.place(@user_cruiser, cell)
+    cells
+
+    @player.place(@user_cruiser, cells)
     puts "\n"
     puts @player.render(true)
-    # asking for submarine placement
+  end
+
+  def player_submarine_placement
     puts "\nEnter the squares for the Submarine (2 spaces):"
     print ">"
-    cell2 = gets.chomp.upcase.split
-    until @player.valid_placement?(@user_submarine, cell2)
+    cells2 = gets.chomp.upcase.split
+    until @player.valid_placement?(@user_submarine, cells2)
       puts "Those are invalid coordinates. Please try again:"
       print ">"
-      cell2 = gets.chomp.upcase.split
+      cells2 = gets.chomp.upcase.split
     end
-    cell2
-    @player.place(@user_submarine, cell2)
+    cells2
+
+    @player.place(@user_submarine, cells2)
     puts "\n"
     puts "Our board's are now set!"
+  end
+
+  def player_coordinates
+    lay_player_ships_prompt
+    player_cruiser_placement
+    player_submarine_placement
   end
 
   def player_shot
@@ -75,6 +87,7 @@ class Game
       print ">"
       shot = gets.chomp.upcase
     end
+
     @computer.cells[shot].fire_upon
 
     if @computer.cells[shot].empty? == true
@@ -92,6 +105,7 @@ class Game
       array = @player.cells.keys.sample
     end
     array
+
     @player.cells[array].fire_upon
 
     if @player.cells[array].empty? == true
@@ -125,24 +139,36 @@ class Game
     false
   end
 
+  def computer_lose_prompt
+    puts "===Computer Board==="
+    puts @computer.render
+    puts "====Player Board===="
+    puts @player.render(true)
+    puts "\n"
+    puts "You won!"
+  end
+
+  def player_lose_prompt
+    puts "===Computer Board==="
+    puts @computer.render
+    puts "====Player Board===="
+    puts @player.render(true)
+    puts "\n"
+    puts "You lost!"
+  end
+
   def winner
     until computer_lose == true || player_lose == true
       turn
     end
     if computer_lose == true
-      puts "===Computer Board==="
-      puts @computer.render
-      puts "====Player Board===="
-      puts @player.render(true)
-      "\n"
-      puts "You won!"
+      computer_lose_prompt
+      puts "\n"
+      main_menu
     else player_lose == true
-      puts "===Computer Board==="
-      puts @computer.render
-      puts "====Player Board===="
-      puts @player.render(true)
-      "\n"
-      puts "You lost!"
+      player_lose_prompt
+      puts "\n"
+      main_menu
     end
   end
 

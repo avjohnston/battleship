@@ -4,8 +4,6 @@ require './lib/ship'
 require './lib/cell'
 require './lib/board'
 require './lib/game'
-require 'mocha/minitest'
-
 
 class GameTest < MiniTest::Test
   def test_it_exists
