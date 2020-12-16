@@ -65,8 +65,8 @@ class Board
   end
 
   def placed_consecutively(coordinates)
-    return true if (placed_consecutive_numbers?(coordinates) == true && letters_array(coordinates).uniq.length == 1) ||
-    (numbers_array(coordinates).uniq.length == 1 && placed_consecutive_letters?(coordinates) == true)
+    return true if (placed_consecutive_numbers?(coordinates) && letters_array(coordinates).uniq.length == 1) ||
+    (numbers_array(coordinates).uniq.length == 1 && placed_consecutive_letters?(coordinates))
     false
   end
 
@@ -75,8 +75,8 @@ class Board
   end
 
   def valid_placement?(ship, coordinates)
-    placed_consecutively(coordinates) &&
-    ship_fits(ship, coordinates) &&
+    placed_consecutively(coordinates)    &&
+    ship_fits(ship, coordinates)         &&
     valid_ship_coordinates?(coordinates) &&
     cell_is_empty?(coordinates)
   end

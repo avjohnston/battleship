@@ -22,5 +22,4 @@ class GameTest < MiniTest::Test
     expected = game.random_coordinate_generator(computer_submarine)
     assert_equal true, computer.valid_placement?(computer_submarine, expected)
   end
-
 end

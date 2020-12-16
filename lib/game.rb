@@ -28,6 +28,7 @@ class Game
     @computer.place(@computer_submarine, random_coordinate_generator(@computer_submarine))
   end
 
+
   def lay_player_ships_prompt
     puts "\nI have laid out my ships on the grid."
     puts "You now need to lay out your two ships."
@@ -39,6 +40,7 @@ class Game
     puts "C . . . ."
     puts "D . . . ."
   end
+
 
   def player_cruiser_placement
     puts "\nEnter the squares for the Cruiser (3 spaces):"

@@ -89,10 +89,10 @@ class BoardTest < MiniTest::Test
     board = Board.new
     cruiser = Ship.new("Cruiser", 3)
     submarine = Ship.new("Submarine", 2)
-    assert_equal false, board.valid_ship_coordinates?(["A5", "B5", "C5"])
-    assert_equal false, board.valid_ship_coordinates?(["C1", "D1", "E1"])
-    assert_equal true, board.valid_ship_coordinates?(["A1", "A2"])
-    assert_equal true, board.valid_ship_coordinates?(["B1", "C1", "D1"])
+    assert_equal false, board.valid_placement?(cruiser, ["A1", "B5", "C5"])
+    assert_equal false, board.valid_placement?(cruiser, ["C1", "D1", "E1"])
+    assert_equal true, board.valid_placement?(cruiser, ["A1", "A2", "A3"])
+    assert_equal true, board.valid_placement?(cruiser, ["A1", "B1", "C1"])
   end
 
   def test_valid_coordinate?

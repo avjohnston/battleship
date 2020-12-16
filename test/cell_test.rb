@@ -90,5 +90,4 @@ class CellTest < MiniTest::Test
     cell.place_ship(cruiser)
     assert_equal "S", cell.render(true)
   end
-
 end
