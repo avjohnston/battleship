@@ -41,6 +41,16 @@ class BoardTest < MiniTest::Test
     assert_equal false, board.valid_coordinate?("A22")
   end
 
+  def test_letters_array
+    board = Board.new
+    assert_equal ["A", "A"], board.letters_array(["A1", "A2"])
+  end
+
+  def test_numbers_array
+    board = Board.new
+    assert_equal [1, 2], board.numbers_array(["A1", "A2"])
+  end
+
   def test_that_coordinates_are_placed_horizontally
     board = Board.new
     cruiser = Ship.new("Cruiser", 3)
@@ -83,6 +93,16 @@ class BoardTest < MiniTest::Test
     assert_equal false, board.placed_consecutively(["A1", "B1", "C2"])
     assert_equal true, board.placed_consecutive_letters?(["A1", "B1"])
     assert_equal true, board.placed_consecutive_letters?(["A1", "B1", "C1"])
+  end
+
+  def test_ship_fits
+    board = Board.new
+    cruiser = Ship.new("Cruiser", 3)
+    submarine = Ship.new("Submarine", 2)
+    assert_equal true, board.ship_fits(cruiser, ["A1", "A2", "A3"])
+    assert_equal false, board.ship_fits(cruiser, ["A1", "A2"])
+    assert_equal false, board.ship_fits(submarine, ["A1", "A2", "A3"])
+    assert_equal true, board.ship_fits(submarine, ["A1", "A2"])
   end
 
   def test_valid_placement_for_coordinate?
