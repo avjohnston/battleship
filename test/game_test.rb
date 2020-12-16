@@ -4,8 +4,6 @@ require './lib/ship'
 require './lib/cell'
 require './lib/board'
 require './lib/game'
-require 'mocha/minitest'
-
 
 class GameTest < MiniTest::Test
   def test_it_exists
@@ -24,5 +22,4 @@ class GameTest < MiniTest::Test
     expected = game.random_coordinate_generator(computer_submarine)
     assert_equal  true, computer.valid_placement?(computer_submarine, expected)
   end
-
 end
